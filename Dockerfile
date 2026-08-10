@@ -3,7 +3,7 @@ FROM python:3.11-slim
 
 # Set metadata
 LABEL maintainer="Jason13"
-LABEL description="Argus - Information Gathering & Reconnaissance Toolkit"
+LABEL description="Perimetry - Information Gathering & Reconnaissance Toolkit"
 LABEL version="2.0"
 
 # Set environment variables
@@ -12,7 +12,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Create non-root user for security
-RUN groupadd -r argus && useradd -r -g argus argus
+RUN groupadd -r perimetry && useradd -r -g perimetry perimetry
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -51,11 +51,11 @@ COPY . .
 RUN mkdir -p /app/results /app/logs /app/config
 
 # Set proper permissions
-RUN chown -R argus:argus /app && \
+RUN chown -R perimetry:perimetry /app && \
     chmod -R 755 /app
 
 # Switch to non-root user
-USER argus
+USER perimetry
 
 # Create volume for results and config
 VOLUME ["/app/results", "/app/config"]
@@ -64,7 +64,7 @@ VOLUME ["/app/results", "/app/config"]
 EXPOSE 8080
 
 # Set default command
-ENTRYPOINT ["python", "-m", "argus"]
+ENTRYPOINT ["python", "-m", "perimetry"]
 
 # Default command (can be overridden)
 CMD ["--help"]

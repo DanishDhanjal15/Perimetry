@@ -12,3 +12,10 @@ logs/
 .venv/
 venv/
 env/
+
+# Scan output, logs and scratch artifacts — never commit these
+*.log
+scratch_logs/
+perimetry/Logs/
+perimetry/Results/
+malware_phishing.log

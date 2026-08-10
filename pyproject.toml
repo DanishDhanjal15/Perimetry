@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 
 [project]
-name = "argus-recon"
+name = "perimetry"
 version = "2.0"
 description = "Toolkit for information gathering & reconnaissance."
 readme = "README.md"
@@ -28,10 +28,16 @@ dependencies = [
   "requests>=2.32,<3",
   "urllib3>=2,<3",
   "rich>=13,<14",
+  "cmd2>=2.4",
+  "colorama>=0.4.5,<1",
+  "tabulate>=0.9,<1",
+  "aiohttp>=3.9,<4",
   "dnspython>=2.6,<3",
   "paramiko>=3,<4",
   "beautifulsoup4>=4.12,<5",
   "lxml>=5,<6",
+  "pyOpenSSL>=24,<26",
+  "PyJWT>=2.8,<3",
   "Jinja2>=3.1,<4",
   "packaging>=24,<25",
   "python-slugify>=8,<9",
@@ -40,6 +46,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# Modules that degrade gracefully when these are absent.
+full = [
+  "pysnmp>=4.4.12",
+  "aioquic>=0.9",
+]
 dev = [
   "pytest>=8",
   "ruff>=0.6",
@@ -49,14 +60,14 @@ dev = [
 ]
 
 [project.scripts]
-argus = "argus.cli.main:main"
+perimetry = "perimetry.cli.main:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["argus", "argus.*"]
+include = ["perimetry", "perimetry.*"]
 
 [tool.setuptools.package-data]
-argus = [
+perimetry = [
   "config/*.json",
   "templates/**/*.j2",
   "data/**/*",

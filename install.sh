@@ -1,10 +1,10 @@
 #!/bin/bash
 # ==========================================
-#   Argus Installation Script 
+#   Perimetry Installation Script 
 # ==========================================
 
 set -e
-APP_NAME="argus"
+APP_NAME="perimetry"
 INSTALL_DIR="/opt/$APP_NAME"
 BIN_PATH="/usr/local/bin/$APP_NAME"
 UNINSTALLER="$INSTALL_DIR/uninstall.sh"
@@ -15,7 +15,7 @@ RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; BLUE="\e[34m"; RESET="\e[0m"
 
 echo ""
 echo -e "${BLUE}==========================================${RESET}"
-echo -e "${BLUE}        ARGUS GLOBAL INSTALLER TOOL        ${RESET}"
+echo -e "${BLUE}        PERIMETRY GLOBAL INSTALLER TOOL        ${RESET}"
 echo -e "${BLUE}==========================================${RESET}"
 echo ""
 
@@ -35,17 +35,17 @@ echo -e "${GREEN}[✔] Python environment verified.${RESET}"
 echo -e "${YELLOW}[INFO] Cleaning previous installations...${RESET}"
 rm -rf "$INSTALL_DIR" "$BIN_PATH"
 
-# --- Step 4: Copy Argus to /opt ---
-echo -e "${BLUE}[INFO] Copying Argus source to $INSTALL_DIR...${RESET}"
+# --- Step 4: Copy Perimetry to /opt ---
+echo -e "${BLUE}[INFO] Copying Perimetry source to $INSTALL_DIR...${RESET}"
 mkdir -p "$INSTALL_DIR"
-cp -r "$(pwd)/argus" "$INSTALL_DIR/"
+cp -r "$(pwd)/perimetry" "$INSTALL_DIR/"
 chmod -R 755 "$INSTALL_DIR"
 
 # --- Step 5: Auto-create __main__.py if missing ---
-if [ ! -f "$INSTALL_DIR/argus/__main__.py" ]; then
+if [ ! -f "$INSTALL_DIR/perimetry/__main__.py" ]; then
     echo -e "${YELLOW}[INFO] Missing __main__.py detected. Creating automatically...${RESET}"
-    cat <<'EOF' > "$INSTALL_DIR/argus/__main__.py"
-from argus.cli.main import main
+    cat <<'EOF' > "$INSTALL_DIR/perimetry/__main__.py"
+from perimetry.cli.main import main
 
 if __name__ == "__main__":
     main()
@@ -69,7 +69,7 @@ cat <<EOF > "$BIN_PATH"
 if [ "\$1" == "uninstall" ]; then
     sudo bash $UNINSTALLER
 else
-    PYTHONPATH=/opt/argus python3 -m argus "\$@"
+    PYTHONPATH=/opt/perimetry python3 -m perimetry "\$@"
 fi
 EOF
 chmod +x "$BIN_PATH"
@@ -79,25 +79,25 @@ echo -e "${BLUE}[INFO] Creating uninstaller script...${RESET}"
 cat <<'UNINSTALL' > "$UNINSTALLER"
 #!/bin/bash
 # ==========================================
-#   Argus Uninstallation Script (Auto)
+#   Perimetry Uninstallation Script (Auto)
 # ==========================================
-APP_NAME="argus"
+APP_NAME="perimetry"
 INSTALL_DIR="/opt/$APP_NAME"
 BIN_PATH="/usr/local/bin/$APP_NAME"
 RED="\e[31m"; GREEN="\e[32m"; YELLOW="\e[33m"; BLUE="\e[34m"; RESET="\e[0m"
 
 echo ""
 echo -e "${BLUE}==========================================${RESET}"
-echo -e "${BLUE}          ARGUS UNINSTALLER TOOL          ${RESET}"
+echo -e "${BLUE}          PERIMETRY UNINSTALLER TOOL          ${RESET}"
 echo -e "${BLUE}==========================================${RESET}"
 echo ""
 
 if [ "$EUID" -ne 0 ]; then
-    echo -e "${RED}[❌] Please run as root (sudo argus uninstall)${RESET}"
+    echo -e "${RED}[❌] Please run as root (sudo perimetry uninstall)${RESET}"
     exit 1
 fi
 
-echo -e "${YELLOW}This will permanently remove Argus.${RESET}"
+echo -e "${YELLOW}This will permanently remove Perimetry.${RESET}"
 read -p "Type 'yes' to confirm: " confirm
 if [ "$confirm" != "yes" ]; then
     echo -e "${YELLOW}[INFO] Uninstallation cancelled.${RESET}"
@@ -105,7 +105,7 @@ if [ "$confirm" != "yes" ]; then
 fi
 
 rm -rf "$INSTALL_DIR" "$BIN_PATH"
-echo -e "${GREEN}[✔] Argus successfully removed.${RESET}"
+echo -e "${GREEN}[✔] Perimetry successfully removed.${RESET}"
 echo ""
 UNINSTALL
 
@@ -113,22 +113,22 @@ chmod +x "$UNINSTALLER"
 
 # --- Step 9: Verification ---
 echo -e "${BLUE}[INFO] Verifying installation...${RESET}"
-PYTHONPATH=/opt/argus python3 -c "import argus" >/dev/null 2>&1 && \
+PYTHONPATH=/opt/perimetry python3 -c "import perimetry" >/dev/null 2>&1 && \
 echo -e "${GREEN}[✔] Verification successful.${RESET}" || \
 { echo -e "${RED}[❌] Verification failed.${RESET}"; exit 1; }
 
 # --- Step 10: Final summary ---
 echo ""
 echo -e "${BLUE}==========================================${RESET}"
-echo -e "${GREEN}✅ ARGUS INSTALLED SUCCESSFULLY (GLOBAL)${RESET}"
+echo -e "${GREEN}✅ PERIMETRY INSTALLED SUCCESSFULLY (GLOBAL)${RESET}"
 echo -e "${BLUE}==========================================${RESET}"
 echo ""
 echo -e "📦 Location:      $INSTALL_DIR"
 echo -e "⚙️  Executable:    $BIN_PATH"
 echo -e "📜 Requirements:  Installed from $(basename "$LOCAL_REQ")"
-echo -e "🧹 Uninstall via: ${YELLOW}argus uninstall${RESET}"
+echo -e "🧹 Uninstall via: ${YELLOW}perimetry uninstall${RESET}"
 echo ""
-echo -e "🚀 Launch Argus globally using: ${YELLOW}argus${RESET}"
+echo -e "🚀 Launch Perimetry globally using: ${YELLOW}perimetry${RESET}"
 echo ""
 echo -e "${BLUE}==========================================${RESET}"
 echo ""

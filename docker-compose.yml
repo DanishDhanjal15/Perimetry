@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  argus:
+  perimetry:
     build: .
-    container_name: argus-recon
-    image: argus-recon:latest
+    container_name: perimetry
+    image: perimetry:latest
     volumes:
       # Mount results directory for persistent output
       - ./results:/app/results
@@ -44,7 +44,7 @@ services:
           cpus: '0.5'
     # Health check
     healthcheck:
-      test: ["CMD", "python", "-c", "import argus; print('Argus is healthy')"]
+      test: ["CMD", "python", "-c", "import perimetry; print('Perimetry is healthy')"]
       interval: 30s
       timeout: 10s
       retries: 3

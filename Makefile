@@ -2,11 +2,11 @@
 
 # Default target
 help:
-	@echo "Argus - Information Gathering & Reconnaissance Toolkit"
+	@echo "Perimetry - Information Gathering & Reconnaissance Toolkit"
 	@echo ""
 	@echo "Available commands:"
-	@echo "  install      - Install Argus and dependencies"
-	@echo "  install-dev  - Install Argus with development dependencies"
+	@echo "  install      - Install Perimetry and dependencies"
+	@echo "  install-dev  - Install Perimetry with development dependencies"
 	@echo "  test         - Run tests"
 	@echo "  test-cov     - Run tests with coverage"
 	@echo "  lint         - Run linting checks"
@@ -14,7 +14,7 @@ help:
 	@echo "  clean        - Clean build artifacts"
 	@echo "  build        - Build package"
 	@echo "  docker-build - Build Docker image"
-	@echo "  docker-run   - Run Argus in Docker"
+	@echo "  docker-run   - Run Perimetry in Docker"
 	@echo "  docker-stop  - Stop Docker container"
 	@echo "  docker-clean - Clean Docker artifacts"
 
@@ -30,17 +30,17 @@ test:
 	pytest tests/ -v
 
 test-cov:
-	pytest tests/ --cov=argus --cov-report=html --cov-report=term-missing
+	pytest tests/ --cov=perimetry --cov-report=html --cov-report=term-missing
 
 # Code quality
 lint:
-	flake8 argus/ tests/
-	bandit -r argus/
-	mypy argus/
+	flake8 perimetry/ tests/
+	bandit -r perimetry/
+	mypy perimetry/
 
 format:
-	black argus/ tests/
-	isort argus/ tests/
+	black perimetry/ tests/
+	isort perimetry/ tests/
 
 # Cleaning
 clean:
@@ -59,7 +59,7 @@ build:
 
 # Docker operations
 docker-build:
-	docker build -t argus-recon:latest .
+	docker build -t perimetry:latest .
 
 docker-run:
 	docker run -it --rm \
@@ -67,7 +67,7 @@ docker-run:
 		-v $(PWD)/config:/app/config \
 		-v $(PWD)/logs:/app/logs \
 		--network host \
-		argus-recon:latest
+		perimetry:latest
 
 docker-run-interactive:
 	docker run -it --rm \
@@ -75,7 +75,7 @@ docker-run-interactive:
 		-v $(PWD)/config:/app/config \
 		-v $(PWD)/logs:/app/logs \
 		--network host \
-		argus-recon:latest bash
+		perimetry:latest bash
 
 docker-compose-up:
 	docker-compose up -d
@@ -96,7 +96,7 @@ quick-test: format lint test
 
 # Security checks
 security-check:
-	bandit -r argus/ -f json -o bandit-report.json
+	bandit -r perimetry/ -f json -o bandit-report.json
 	safety check
 
 # Documentation
