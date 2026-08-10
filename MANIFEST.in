@@ -1,6 +1,5 @@
 include README.md
 include LICENSE
+include CONTRIBUTIONS.md
+include MODULES.md
 recursive-include perimetry/config *.json
-recursive-include perimetry/templates *.j2
-recursive-include perimetry/data *
-include perimetry/py.typed

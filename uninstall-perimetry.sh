@@ -1,14 +1,21 @@
 #!/bin/bash
+# Removes what install.sh installs: the payload at /opt/perimetry and the
+# launcher at /usr/local/bin/perimetry. Run with sudo.
 set -euo pipefail
-say(){ printf "%s\n" "$*"; }
-DEST_DIR="/root/.local/bin"
-say "[STEP] Removing launcher(s)"
-rm -f "$DEST_DIR/perimetry" 2>/dev/null || true
-# Also try common system paths in case of previous installs:
-sudo rm -f /usr/local/bin/perimetry 2>/dev/null || true
-sudo rm -f /usr/bin/perimetry 2>/dev/null || true
-say "[STEP] (Optional) Remove PATH line in ~/.zshrc or ~/.bashrc if you added one."
-say "[STEP] (Optional) Remove user-site Python deps via:"
-say "  # if packaged: python3 -m pip uninstall perimetry -y"
-say "  # or from your repo: pip3 uninstall -r requirements.txt"
-say "[OK] Uninstall steps completed"
+
+INSTALL_DIR="/opt/perimetry"
+BIN_PATH="/usr/local/bin/perimetry"
+
+if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+  echo "[!] Please run as root:  sudo ./uninstall-perimetry.sh"
+  exit 1
+fi
+
+echo "[*] Removing launcher: $BIN_PATH"
+rm -f "$BIN_PATH"
+
+echo "[*] Removing payload:  $INSTALL_DIR"
+rm -rf "$INSTALL_DIR"
+
+echo "[✓] Perimetry uninstalled."
+echo "    If you instead installed with pip, remove it with:  pip uninstall perimetry"

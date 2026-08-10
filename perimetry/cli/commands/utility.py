@@ -32,7 +32,7 @@ class UtilityMixin:
     @with_category("Utility")
     def do_banner(self, _line) -> None:
         console.print()
-        logo()
+        logo(VERSION, number_of_modules, AUTHOR)
         console.print()
         display_table()
         console.print()

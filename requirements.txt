@@ -1,47 +1,36 @@
-# Core HTTP and Networking
-aiohttp>=3.8.0
-requests>=2.28.0
-urllib3>=1.26.0
-aioquic>=0.9.0
+# Runtime dependencies — kept in sync with [project.dependencies] in pyproject.toml.
+# For a normal install prefer:  pip install .
+# This file exists for the Docker build, which installs deps before copying the
+# package. Optional/dev extras are NOT listed here — see the notes at the bottom.
 
-# CLI and User Interface
-cmd2>=2.4.0
-rich>=12.0.0
-colorama>=0.4.5
-tabulate>=0.8.10
+# HTTP & networking
+requests>=2.32,<3
+urllib3>=2,<3
+aiohttp>=3.9,<4
+dnspython>=2.6,<3
+idna>=3,<4
 
-# DNS and Network Analysis
-dnspython>=2.2.0
-pysnmp>=4.4.12
-paramiko>=2.11.0
+# CLI & UI
+cmd2>=2.4
+rich>=13,<14
+colorama>=0.4.5,<1
+tabulate>=0.9,<1
 
-# Web Scraping and Parsing
-beautifulsoup4>=4.11.0
-lxml>=4.9.0
+# Parsing
+beautifulsoup4>=4.12,<5
+lxml>=5,<6
 
-# Security and Cryptography
-pyOpenSSL>=22.0.0
-PyJWT>=2.6.0
-cryptography>=37.0.0
+# Security & crypto
+paramiko>=3,<4
+pyOpenSSL>=24,<26
+PyJWT>=2.8,<3
 
-# Data Processing and Utilities
-Jinja2>=3.1.0
-python-slugify>=6.1.0
-packaging>=21.3
-idna>=3.4
-mmh3>=3.0.0
+# Utilities
+Jinja2>=3.1,<4
+packaging>=24,<25
+python-slugify>=8,<9
+mmh3>=4,<5
 
-# Additional Security Tools
-jarm
-ldap3>=2.9.0
-
-# Development and Testing (optional)
-pytest>=7.0.0
-pytest-cov>=4.0.0
-black>=22.0.0
-flake8>=5.0.0
-bandit>=1.7.0
-
-# Documentation
-sphinx>=5.0.0
-sphinx-rtd-theme>=1.0.0
+# Optional extras (not installed by this file):
+#   SNMP + HTTP/3 modules:   pip install ".[full]"     (pysnmp, aioquic)
+#   Dev/test tooling:        pip install ".[dev]"      (pytest, ruff, mypy, build, twine)
